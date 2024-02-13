@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Tr3</title>
+</head>
+<body>
+
+    <form>
+        <label for="Hours">Enter Hours: </label>
+        <br />
+        <input type="number" id="hours" min="0" max="23" required />
+        <br />
+        <label for="Minutes">Enter Minutes: </label>
+        <br />
+        <input type="number" id="minutes" min="1" max="59" required />
+        <br />
+        <label for="Seconds">Enter Seconds: </label>
+        <br />
+        <input type="number" id="seconds" min="0" max="59" required />
+        <br />
+        <label for="Country">Enter A Country: </label>
+        <br />
+        <input type="text" id="country" required />
+        <br />
+        <input type="submit" id="submitBtn"  value="Create Clock" onclick="CreateClock()" />
+    </form>
+
+    <div id="div1"> </div>
+
+    <script>
+        class Clock
+        {
+            constructor (hours, minutes, seconds, country)
+            {
+                this.hours = hours;
+                this.minutes = minutes;
+                this.seconds = seconds;
+                this.country = country;
+            }
+            Show() {
+                const formatNumber = function (num) {
+                    return num < 10 ? `0${num}` : num;
+                };
+                return `${formatNumber(this.hours)}:${formatNumber(this.minutes)}:${formatNumber(this.seconds)}`;
+            }
+
+            ConvertToSeconds() {
+                return this.hours * 3600 + this.minutes * 60 + this.seconds;
+            }
+
+        }
+        const ClockArray=[];
+
+        function CreateClock()
+        {
+            const HoursInput = document.getElementById("hours").value;
+            const MinutesInput = document.getElementById("minutes").value;
+            const SecondInput = document.getElementById("seconds").value;
+            const CountryInput = document.getElementById("country").value;
+            if (HoursInput > 23 || MinutesInput > 59 || SecondInput>59)
+            {
+                alert("You enterd a not valid input/s")
+            }
+            else {
+                Newclock = new Clock(HoursInput, MinutesInput, SecondInput, CountryInput);
+
+                ClockArray.push(Newclock)
+            }
+
+            document.getElementById("hours").value = '';
+            document.getElementById("minutes").value = '';
+            document.getElementById("seconds").value = '';
+            document.getElementById("country").value = '';
+
+            if (ClockArray.length==5) {
+                DisplayClock();
+            }
+        }
+
+        function DisplayClock()
+        {
+            ClockDetails = "";
+            for (var i = 0; i < ClockArray.length; i++) {
+                ClockDetails += `Clock Number ${i + 1}: Country: ${ClockArray[i].country} Time: ${ClockArray[i].Show()}
+                Time In Seconds: ${ClockArray[i].ConvertToSeconds()} <br/>`;
+            }
+
+            let NewP = document.createElement("p");
+            NewP.innerHTML = ClockDetails;
+            document.getElementById("div1").appendChild(NewP);
+        }
+    </script>
+</body>
+</html>

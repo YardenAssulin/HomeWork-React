@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Tr1</title>
+
+</head>
+<body>
+    <form>
+        <input id="countervalue" type="text" placeholder="Enter A Value" />
+        <br />
+        <input type="button" value="start" id="Startbtn" />
+        <br />
+        <input type="button" value="Plus+" id="Plusbtn" />
+        <br />
+        <input type="button" value="Go" id="Gobtn" />
+        <br />
+        <div id="NewDiv"> </div>
+    </form>
+
+    <script>
+        class counter {
+            constructor(number) {
+                this.number = number
+            }
+
+            Initialize() {
+                var x = document.getElementById("countervalue").value;
+                this.number = x;
+            }
+
+            increment() {
+                this.number++;
+                document.getElementById("countervalue").value = this.number;
+            }
+
+            Go() {
+                var Str = "";
+                for (var i = 0; i <= this.number; i++) {
+
+                    Str += i + " ";
+
+                }
+                let ph = document.createElement("p");
+                ph.textContent = Str;
+                document.querySelector("#NewDiv").appendChild(ph);
+
+            }
+        }
+        counter1 = new counter();
+        document.querySelector("#Startbtn").addEventListener("click", () => counter1.Initialize());
+        document.querySelector("#Plusbtn").addEventListener("click", () => counter1.increment());
+        document.querySelector("#Gobtn").addEventListener("click", () => counter1.Go());
+
+    </script>
+</body>
+</html>

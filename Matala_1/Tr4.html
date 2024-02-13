@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Tr4</title>
+</head>
+<body>
+
+    <script>
+        class Point {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+            }
+
+            Show() {
+                console.log(`(${this.x}, ${this.y})`);
+            }
+
+            Equals(p) {
+                return this.x === p.x && this.y === p.y;
+            }
+        }
+
+        function PointsExistInArray(PointsArray, x, y) {
+            for (const point of PointsArray) {
+                if (point.x == x && point.y == y) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        function pointExistsInArrayObject(PointsArray, pointObject) {
+            for (const point of PointsArray) {
+                if (point.Equals(pointObject)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        function calculateRouteLength(pointsArray) {
+            let totalDistance = 0;
+
+            for (let i = 0; i < pointsArray.length - 1; i++) {
+                const point1 = pointsArray[i];
+                const point2 = pointsArray[i + 1];
+                const distance = Math.sqrt(Math.pow(point2.x - point1.x, 2) + Math.pow(point2.y - point1.y, 2));
+                totalDistance += distance;
+            }
+
+            return totalDistance;
+        }
+
+        const point1 = new Point(3, 4);
+        const point2 = new Point(-1, 5);
+        const point3 = new Point(0, 0);
+        const point4 = new Point(12, 2);
+        const PointsArray = [point1, point2, point3,point4];
+
+        console.log("Points Array:");
+        for (const point of PointsArray) {
+            point.Show();
+        }
+        ////Example for Q4.2:True
+        const example1X = -1;
+        const example1Y = 5;
+        console.log(`Does point (${example1X}, ${example1Y}) exist?`);
+        console.log(PointsExistInArray(PointsArray, example1X, example1Y));
+
+        ////Example for Q4.2:False
+        const example2X = 2;
+        const example2Y = 2;
+        console.log(`Does point (${example2X}, ${example2Y}) exist?`);
+        console.log(PointsExistInArray(PointsArray, example2X, example2Y));
+
+        // Example for Q4.3:True
+        const example1True = new Point(0, 0);
+        console.log("Does point exist in array (using object)?");
+        console.log(pointExistsInArrayObject(PointsArray, example1True));
+
+        // Example for Q4.3:False
+        const example2False = new Point(2, 2);
+        console.log("Does point exist in array (using object)?");
+        console.log(pointExistsInArrayObject(PointsArray, example2False));
+
+        //Example for Q4.4:
+        const routeLength = calculateRouteLength(PointsArray);
+        console.log(`Total Route Length: ${routeLength}`);
+
+        // Display on HTML page
+        document.write("<h2>Points Array:</h2>");
+        for (const point of PointsArray) {
+            document.write(`<p>(${point.x}, ${point.y})</p>`);
+        }
+        document.write(`<h2>Total Route Length:</h2><p>${routeLength}</p>`);
+    </script>
+</body>
+</html>

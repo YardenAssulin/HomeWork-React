@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Tr2</title>
+   
+
+</head>
+<body>
+    <form>
+        <label for="Name">Duck's Name:</label>
+        <br>
+        <input type="text" id="D_Name" required />
+        <br />
+        <label for="Color">Duck's Color:</label>
+        <br>
+        <input type="text" id="D_Color" required />
+        <br />
+        <label for="Age">Duck's Age:</label>
+        <br>
+        <input type="text" id="D_Age" required />
+        <br />
+        <label for="Weight">Duck's Weight:</label>
+        <br>
+        <input type="text" id="D_Weight" required />
+        <br />
+        <label for="Img">Duck's Image:</label>
+        <br>
+        <input type="file" id="D_Img" accept="image/*" required />
+        <br />
+        <input type="submit" value="Create Duck" id="submitbtn" onclick="CreateDuck()">
+        <br />
+        <input type="button" id="ShowBtn" hidden value="Show" onclick="Duck1.Show()" />
+        <br />
+        <input type="button" id="QuackBtn" hidden value="Quack" onclick="Duck1.Quack()" />
+    </form>
+    <div id="div1"></div>
+
+    <script>
+
+        let Duck1;
+
+        class Duck {
+            constructor(name, color, age, weight, img) {
+                this.name = name;
+                this.color = color;
+                this.age = age;
+                this.weight = weight;
+                this.img = img;
+            }
+
+            Show() {
+                document.getElementById("div1").innerHTML = "";
+                const duckImage = document.createElement("img");
+                duckImage.src = URL.createObjectURL(this.img);
+                duckImage.width = 200;
+                duckImage.height = 150;
+
+                var str =
+                    "Duck detalis -" + "name: " +
+                    this.name +
+                    " color: " +
+                    this.color +
+                    " age: " +
+                    this.age +
+                    " weight: " +
+                    this.weight;
+
+                let p1 = document.createElement("p");
+                p1.textContent = str;
+
+                document.getElementById("div1").appendChild(p1);
+                document.getElementById("div1").appendChild(duckImage);
+            }
+
+            Quack() {
+                document.getElementById("div1").innerHTML = "";
+                const QuackCount = Math.floor((this.age * this.weight) / 2);
+                let quackParagraph = document.createElement("p");
+
+                for (let i = 0; i < QuackCount; i++) {
+                    quackParagraph.textContent += "Quack";
+                }
+
+                document.getElementById("div1").appendChild(quackParagraph);
+
+                const DuckAudio = new Audio("Files/quacking-sound-for-duck-96140.mp3")
+
+                let playCount = 0;
+
+                DuckAudio.addEventListener("ended", function () {
+                    if (playCount < 2) {
+                        DuckAudio.currentTime = 0;
+                        DuckAudio.play();
+                        playCount++;
+                    }
+                });
+
+                DuckAudio.play();
+            }
+
+        }
+
+
+        function CreateDuck() {
+            const Name = document.getElementById("D_Name").value;
+            const Color = document.getElementById("D_Color").value;
+            const Age = document.getElementById("D_Age").value;
+            const Weight = document.getElementById("D_Weight").value;
+            const ImgInput = document.getElementById("D_Img");
+            const Imag = ImgInput.files[0];
+            Duck1 = new Duck(Name, Color, Age, Weight, Imag);
+
+            document.getElementById("ShowBtn").removeAttribute("hidden");
+            document.getElementById("QuackBtn").removeAttribute("hidden");
+            document.getElementById("submitbtn").setAttribute("disabled", "true");
+        }
+
+
+    </script>
+</body>
+</html>
